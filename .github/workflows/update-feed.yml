@@ -1,0 +1,41 @@
+name: Update Malfini feed
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Import latest Malfini feed
+        env:
+          MALFINI_USERNAME: ${{ secrets.MALFINI_USERNAME }}
+          MALFINI_PASSWORD: ${{ secrets.MALFINI_PASSWORD }}
+          MALFINI_API_BASE_URL: https://api.malfini.com
+        run: node server.js --import
+
+      - name: Prepare static Pages snapshot
+        run: |
+          mkdir -p public/data
+          cp data/feed-cache.json public/data/feed-cache.json
+
+      - name: Publish GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./public
+          force_orphan: true

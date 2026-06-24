@@ -1,0 +1,14 @@
+{
+  "name": "malfini-feed-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local Malfini API feed dashboard for products, stock, prices, and imports.",
+  "scripts": {
+    "start": "node server.js",
+    "import": "node server.js --import"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
+

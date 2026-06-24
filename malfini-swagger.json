@@ -1,0 +1,5582 @@
+﻿{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Eshop",
+    "description": "\nAPI Support Contact: b2bsupport@malfini.com\n\nFor more contacts, visit www.malfini.com, section Contacts.\n\nTo authorize in auth or api-auth login functions, use the username and password from the www.malfini.com e-shop. It is recommended to use the Main Account / User Details section in the e-shop to create a new dedicated account for the purpose of accessing the API.\n\nFor the ver parameter, use the current version of the API (4).",
+    "version": "4.0"
+  },
+  "paths": {
+    "/api/v4/address": {
+      "get": {
+        "tags": [
+          "address"
+        ],
+        "summary": "List addresses.",
+        "description": "Returns the list of your company's addresses.",
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of addresses if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddressListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "address"
+        ],
+        "summary": "List addresses.",
+        "description": "Returns the list of your company's addresses.",
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of addresses if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddressListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "address"
+        ],
+        "summary": "Address Creation",
+        "description": "Creates a new address and returns it back.",
+        "requestBody": {
+          "description": "AddressCreateUpdateModel",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressCreateUpdateModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressListModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "HTTP 201 and newly created address object if OK."
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/address/{id}": {
+      "put": {
+        "tags": [
+          "address"
+        ],
+        "summary": "Address Update",
+        "description": "Edits the desired address and returns the updated model.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the updating address.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "AddressCreateUpdateModel",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressCreateUpdateModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and updated address object if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressListModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/api-auth/refresh": {
+      "post": {
+        "tags": [
+          "api-auth"
+        ],
+        "summary": "Refresh",
+        "description": "Returns access token from OAuth server.\r\nMethod used for obtaining access token from the authorization server using refresh token",
+        "operationId": "Bearer-AuthRefresh",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BearerLogin"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v4/api-auth/login": {
+      "post": {
+        "tags": [
+          "api-auth"
+        ],
+        "summary": "Login",
+        "description": "Method used for obtaining access token from the authorization server using login and password",
+        "operationId": "Bearer-AuthLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BearerLogin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v4/api-auth/logout": {
+      "post": {
+        "tags": [
+          "api-auth"
+        ],
+        "summary": "Logout",
+        "description": "Method used for logging out from the authorization server using refresh token",
+        "operationId": "Bearer-AuthLogout",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          },
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/auth/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "operationId": "AuthLogout",
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "operationId": "AuthLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CookieLogin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v4/auth/session": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "operationId": "AuthSession",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/complaint/{id}": {
+      "get": {
+        "tags": [
+          "complaint"
+        ],
+        "summary": "Complaint detail.",
+        "description": "Returns detail of a given complaint.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The complaint's unique ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and a complaint detail if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComplaintExternalModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "complaint"
+        ],
+        "summary": "Complaint detail.",
+        "description": "Returns detail of a given complaint.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The complaint's unique ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and a complaint detail if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComplaintExternalModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/complaint": {
+      "get": {
+        "tags": [
+          "complaint"
+        ],
+        "summary": "Complaint list.",
+        "description": "Returns a list of your complaints matching the entered criteria.",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of addresses if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComplaintListExternalModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "complaint"
+        ],
+        "summary": "Complaint list.",
+        "description": "Returns a list of your complaints matching the entered criteria.",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of addresses if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComplaintListExternalModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/country-delivery/{countryCode}": {
+      "get": {
+        "tags": [
+          "country-delivery"
+        ],
+        "summary": "Deliveries in country.",
+        "description": "Returns deliveries allowed in a given country.",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "path",
+            "description": "ISO 3166-1 alpha-2 country code.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of possible delivery ids.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountryDeliveryListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "country-delivery"
+        ],
+        "summary": "Deliveries in country.",
+        "description": "Returns deliveries allowed in a given country.",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "path",
+            "description": "ISO 3166-1 alpha-2 country code.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of possible delivery ids.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountryDeliveryListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/delivery-method/{addressId}": {
+      "get": {
+        "tags": [
+          "delivery-method"
+        ],
+        "summary": "Delivery methods.",
+        "description": "Returns details about delivery methods available. Note that some delivery services may not be available to you in any\r\ncountry.",
+        "parameters": [
+          {
+            "name": "addressId",
+            "in": "path",
+            "description": "Id of the address you wish to deliver to",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of delivery methods if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeliveryListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "delivery-method"
+        ],
+        "summary": "Delivery methods.",
+        "description": "Returns details about delivery methods available. Note that some delivery services may not be available to you in any\r\ncountry.",
+        "parameters": [
+          {
+            "name": "addressId",
+            "in": "path",
+            "description": "Id of the address you wish to deliver to",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of delivery methods if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeliveryListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/delivery-payment": {
+      "get": {
+        "tags": [
+          "delivery-payment"
+        ],
+        "summary": "Payments for delivery.",
+        "description": "Returns available payment methods for specified delivery method.",
+        "parameters": [
+          {
+            "name": "deliveryId",
+            "in": "query",
+            "description": "The ID of the delivery method.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of id pairs if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeliveryPaymentListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "delivery-payment"
+        ],
+        "summary": "Payments for delivery.",
+        "description": "Returns available payment methods for specified delivery method.",
+        "parameters": [
+          {
+            "name": "deliveryId",
+            "in": "query",
+            "description": "The ID of the delivery method.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of id pairs if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeliveryPaymentListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/invoice": {
+      "get": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "GET Invoice list.",
+        "description": "Returns list of invoices matching the criteria.",
+        "parameters": [
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format. Only year and month are required, day and time is optional.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format. Only year and month are required, day and time is optional.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "variableSymbol",
+            "in": "query",
+            "description": "The variable symbol for the payment.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderId",
+            "in": "query",
+            "description": "The unique ID of the corresponding order, starting with KT.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "customOrderId",
+            "in": "query",
+            "description": "Your own custom name or ID for the corresponding order.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paymentId",
+            "in": "query",
+            "description": "ID of the payment method.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paymentStatusId",
+            "in": "query",
+            "description": "ID of the status the payment of the invoice is in.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "invoiceTypeId",
+            "in": "query",
+            "description": "ID of the type of the invoice.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "productSizeCode",
+            "in": "query",
+            "description": "Nomenclature code of a product on the invoice - 7 A-Z-0-9 characters referring to the commodity, color and size of the product (in case of the goods).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "GET Invoice list.",
+        "description": "Returns list of invoices matching the criteria.",
+        "parameters": [
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format. Only year and month are required, day and time is optional.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format. Only year and month are required, day and time is optional.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "variableSymbol",
+            "in": "query",
+            "description": "The variable symbol for the payment.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderId",
+            "in": "query",
+            "description": "The unique ID of the corresponding order, starting with KT.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "customOrderId",
+            "in": "query",
+            "description": "Your own custom name or ID for the corresponding order.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paymentId",
+            "in": "query",
+            "description": "ID of the payment method.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paymentStatusId",
+            "in": "query",
+            "description": "ID of the status the payment of the invoice is in.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "invoiceTypeId",
+            "in": "query",
+            "description": "ID of the type of the invoice.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "productSizeCode",
+            "in": "query",
+            "description": "Nomenclature code of a product on the invoice - 7 A-Z-0-9 characters referring to the commodity, color and size of the product (in case of the goods).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/invoice/{id}": {
+      "get": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "GET Invoice detail.",
+        "description": "Returns detailed information about a specific invoice.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique invoice ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDetailModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "invoice"
+        ],
+        "summary": "GET Invoice detail.",
+        "description": "Returns detailed information about a specific invoice.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique invoice ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDetailModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/invoice-delivery-type": {
+      "get": {
+        "tags": [
+          "invoice-delivery-type"
+        ],
+        "summary": "Invoice delivery types.",
+        "description": "Returns available methods of obtaining the invoice.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceDeliveryTypeListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "invoice-delivery-type"
+        ],
+        "summary": "Invoice delivery types.",
+        "description": "Returns available methods of obtaining the invoice.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceDeliveryTypeListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/invoice-payment-status-type": {
+      "get": {
+        "tags": [
+          "invoice-payment-status-type"
+        ],
+        "summary": "Invoice payment status types.",
+        "description": "Returns the payment status types of invoices.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "invoice-payment-status-type"
+        ],
+        "summary": "Invoice payment status types.",
+        "description": "Returns the payment status types of invoices.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/invoice-type": {
+      "get": {
+        "tags": [
+          "invoice-type"
+        ],
+        "summary": "Invoice types.",
+        "description": "Returns the types of invoices.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "invoice-type"
+        ],
+        "summary": "Invoice types.",
+        "description": "Returns the types of invoices.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/language": {
+      "get": {
+        "tags": [
+          "language"
+        ],
+        "summary": "Language list.",
+        "description": "Returns languages and their codes in which data outputs of other endpoints are available.Use the codes in the optional query parameters. Otherwise, the language of your e-shop account will be used as default.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LanguageModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "language"
+        ],
+        "summary": "Language list.",
+        "description": "Returns languages and their codes in which data outputs of other endpoints are available.Use the codes in the optional query parameters. Otherwise, the language of your e-shop account will be used as default.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LanguageModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/order": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Order list.",
+        "description": "Returns list of orders matching the criteria.",
+        "parameters": [
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format. Only year and month are required, day and time is optional.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format. Only year and month are required, day and time is optional.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "customOrderId",
+            "in": "query",
+            "description": "Own custom order number, if you have entered any when placing the order.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "The unique order ID, starting with KT.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipToAddressId",
+            "in": "query",
+            "description": "The unique address ID the order was shipped to.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "The unique ID of the order's status.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "isCancelled",
+            "in": "query",
+            "description": "Whether the order was cancelled.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderListExternalModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Order list.",
+        "description": "Returns list of orders matching the criteria.",
+        "parameters": [
+          {
+            "name": "fromDate",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format. Only year and month are required, day and time is optional.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "description": "YYYY-MM-DDTHH:MM:SS.mmmZ format. Only year and month are required, day and time is optional.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "customOrderId",
+            "in": "query",
+            "description": "Own custom order number, if you have entered any when placing the order.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "The unique order ID, starting with KT.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "shipToAddressId",
+            "in": "query",
+            "description": "The unique address ID the order was shipped to.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "The unique ID of the order's status.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "isCancelled",
+            "in": "query",
+            "description": "Whether the order was cancelled.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderListExternalModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Creates new order",
+        "description": "This action will create new cart ID (KTxx), add desired product, set desired settings and complete the order.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CartOrderRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/B2BOrderResultModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/order/{id}": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Order detail.",
+        "description": "Returns detailed information about a specific order.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique order ID, starting with KT.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderExternalModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Order detail.",
+        "description": "Returns detailed information about a specific order.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique order ID, starting with KT.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderExternalModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/parcel": {
+      "get": {
+        "tags": [
+          "parcel"
+        ],
+        "summary": "Parcels list.",
+        "description": "Returns list of parcels matching the criteria.",
+        "parameters": [
+          {
+            "name": "package",
+            "in": "query",
+            "description": "Package number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invoice",
+            "in": "query",
+            "description": "Invoice number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Order number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dateFrom",
+            "in": "query",
+            "description": "Date from",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateTo",
+            "in": "query",
+            "description": "Date to",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParcelListDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "parcel"
+        ],
+        "summary": "Parcels list.",
+        "description": "Returns list of parcels matching the criteria.",
+        "parameters": [
+          {
+            "name": "package",
+            "in": "query",
+            "description": "Package number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invoice",
+            "in": "query",
+            "description": "Invoice number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Order number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dateFrom",
+            "in": "query",
+            "description": "Date from",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateTo",
+            "in": "query",
+            "description": "Date to",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParcelListDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/payment-method": {
+      "get": {
+        "tags": [
+          "payment-method"
+        ],
+        "summary": "Payment methods.",
+        "description": "Returns all available payment methods, consult delivery-payment to see which are available for your delivery method\r\nof choice.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "payment-method"
+        ],
+        "summary": "Payment methods.",
+        "description": "Returns all available payment methods, consult delivery-payment to see which are available for your delivery method\r\nof choice.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentListModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/product": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "List of products.",
+        "description": "Returns full list of products (nomenclatures) in portfolio, and detailed information about them.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productCodes",
+            "in": "query",
+            "description": "List of product code for filtering, separated by commas. If not specified, return all.",
+            "schema": {
+              "pattern": "[a-zA-Z0-9,]+",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of products if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "product"
+        ],
+        "summary": "List of products.",
+        "description": "Returns full list of products (nomenclatures) in portfolio, and detailed information about them.",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "ISO 639-1 format.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productCodes",
+            "in": "query",
+            "description": "List of product code for filtering, separated by commas. If not specified, return all.",
+            "schema": {
+              "pattern": "[a-zA-Z0-9,]+",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP 200 and list of products if OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "HTTP 500 in a case of unexpected error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "HTTP 429 in a case of too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "HTTP 401 in a case of not being authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v4/product/availabilities": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Stock availabilities.",
+        "description": "Returns the amount of individual products which are available in stock. In order to get availability of a certain product for a certain date,\r\nadd all availabilities with date equal or previous to the target date. If there are none, or all dates are later than the requested date, the available amount is 0.",
+        "parameters": [
+          {
+            "name": "productCodes",
+            "in": "query",
+            "description": "List of product code for filtering, separated by commas. If not specified, return all.",
+            "schema": {
+              "pattern": "[a-zA-Z0-9,]+",
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeFuture",
+            "in": "query",
+            "description": "Indicates whether to filter only current availabilities or include future ones.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductAvailabilityExternalDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "PHP",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          },
+          {
+            "lang": "C#",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Stock availabilities.",
+        "description": "Returns the amount of individual products which are available in stock. In order to get availability of a certain product for a certain date,\r\nadd all availabilities with date equal or previous to the target date. If there are none, or all dates are later than the requested date, the available amount is 0.",
+        "parameters": [
+          {
+            "name": "productCodes",
+            "in": "query",
+            "description": "List of product code for filtering, separated by commas. If not specified, return all.",
+            "schema": {
+              "pattern": "[a-zA-Z0-9,]+",
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeFuture",
+            "in": "query",
+            "description": "Indicates whether to filter only current availabilities or include future ones.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductAvailabilityExternalDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "PHP",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          },
+          {
+            "lang": "C#",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          }
+        ]
+      }
+    },
+    "/api/v4/product/recommended-prices": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Recommended prices.",
+        "description": "Returns recommended prices for products, where they are available.",
+        "parameters": [
+          {
+            "name": "productCodes",
+            "in": "query",
+            "description": "List of product code for filtering, separated by commas. If not specified, return all.",
+            "schema": {
+              "pattern": "[a-zA-Z0-9,]+",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductRecommendedPriceExternalDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "PHP",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          },
+          {
+            "lang": "C#",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Recommended prices.",
+        "description": "Returns recommended prices for products, where they are available.",
+        "parameters": [
+          {
+            "name": "productCodes",
+            "in": "query",
+            "description": "List of product code for filtering, separated by commas. If not specified, return all.",
+            "schema": {
+              "pattern": "[a-zA-Z0-9,]+",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductRecommendedPriceExternalDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "PHP",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          },
+          {
+            "lang": "C#",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          }
+        ]
+      }
+    },
+    "/api/v4/product/prices": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Product prices.",
+        "description": "Returns your prices for all products",
+        "parameters": [
+          {
+            "name": "productCodes",
+            "in": "query",
+            "description": "List of product code for filtering, separated by commas. If not specified, return all.",
+            "schema": {
+              "pattern": "[a-zA-Z0-9,]+",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductPriceExternalDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "PHP",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          },
+          {
+            "lang": "C#",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          }
+        ]
+      },
+      "head": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Product prices.",
+        "description": "Returns your prices for all products",
+        "parameters": [
+          {
+            "name": "productCodes",
+            "in": "query",
+            "description": "List of product code for filtering, separated by commas. If not specified, return all.",
+            "schema": {
+              "pattern": "[a-zA-Z0-9,]+",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductPriceExternalDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Cookies": [ ],
+            "Bearer": [ ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "PHP",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          },
+          {
+            "lang": "C#",
+            "label": "C#",
+            "source": "Console.WriteLine(\"Hello World\");"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddressCreateUpdateModel": {
+        "required": [
+          "city",
+          "countryCode",
+          "email",
+          "invoiceDeliveryId",
+          "name",
+          "phone",
+          "recipient",
+          "street",
+          "zipCode"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Your own naming of the address."
+          },
+          "shortName": {
+            "type": "string",
+            "description": "Your own shorthand naming of the address.",
+            "nullable": true
+          },
+          "recipient": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The recipient's name."
+          },
+          "street": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The street and house number."
+          },
+          "countryCode": {
+            "minLength": 1,
+            "type": "string",
+            "description": "ISO 3166-1 alpha-2 country code."
+          },
+          "zipCode": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The zip code, source: https://www.geonames.org/."
+          },
+          "city": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The city name corresponding to the zipCode, source: https://www.geonames.org/."
+          },
+          "phone": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The contact phone in the +NNN-NNNNNNNNN format (or similar, as appropriate for your country).",
+            "format": "tel"
+          },
+          "fax": {
+            "type": "string",
+            "description": "The +NNN-NNNNNNNNN format (or similar, as appropriate for your country).",
+            "nullable": true
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "description": "The contact email address.",
+            "format": "email"
+          },
+          "invoiceDeliveryId": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "How the invoice is to be delivered - for more info see invoice-delivery-type.",
+            "format": "int64"
+          },
+          "isValid": {
+            "type": "boolean",
+            "description": "Marks whether the address is valid and can be ordered to."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Address create / update object"
+      },
+      "AddressListModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The unique ID of the address.",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "description": "Your own name of the address.",
+            "nullable": true
+          },
+          "recipientName": {
+            "type": "string",
+            "description": "Recipient's name on the shipping label.",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "description": "The street name and house number.",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "The city name.",
+            "nullable": true
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "The zip code.",
+            "nullable": true
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "ISO 3166-1 alpha-2 country code.",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "The recipient's contact number.",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "description": "The recipient's contact email.",
+            "nullable": true
+          },
+          "poBox": {
+            "type": "string",
+            "description": "PO Box identification, if any.",
+            "nullable": true
+          },
+          "isValid": {
+            "type": "boolean",
+            "description": "Marks whether the address is valid and can be ordered to."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Address object"
+      },
+      "B2BOrderResultModel": {
+        "type": "object",
+        "properties": {
+          "orderCode": {
+            "type": "string",
+            "description": "The code of the newly created order.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BearerLogin": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "nullable": true
+          },
+          "refresh_token": {
+            "type": "string",
+            "nullable": true
+          },
+          "token_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "expires_in": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CartOrderProductModel": {
+        "required": [
+          "count",
+          "productSizeCode"
+        ],
+        "type": "object",
+        "properties": {
+          "productSizeCode": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Nomenclature code - 7 A-Z-0-9 characters referring to the commodity, color and size of the product (in case of the\r\ngoods)."
+          },
+          "count": {
+            "type": "integer",
+            "description": "Amount of pieces.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CartOrderRequestModel": {
+        "required": [
+          "addressId",
+          "deliveryId",
+          "invoiceDeliveryTypeId",
+          "paymentId",
+          "products"
+        ],
+        "type": "object",
+        "properties": {
+          "invoiceDeliveryTypeId": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "ID of the invoice delivery method used.",
+            "format": "int64"
+          },
+          "addressId": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "ID of the address - the address has to be created prior to the order, and has to be valid.",
+            "format": "int64"
+          },
+          "deliveryId": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "ID of the delivery method - the delivery method has to be available for the given address.",
+            "format": "int64"
+          },
+          "paymentId": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "ID of the payment method - the payment method has to be compatible with the delivery method.",
+            "format": "int64"
+          },
+          "deliveryDate": {
+            "type": "string",
+            "description": "The date when the goods are to arrive. If not entered, the closest one available will be chosen.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "customOrderId": {
+            "type": "string",
+            "description": "Your own custom name or ID for the order.",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "description": "Additional note for the customer service. Entering it may delay the expedition process.",
+            "nullable": true
+          },
+          "isPackingListForPrint": {
+            "type": "boolean",
+            "description": "If true, the packing list will be printed and included in the package."
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartOrderProductModel"
+            },
+            "description": "Contains information about items within the order."
+          },
+          "contactEmailAddress": {
+            "type": "string",
+            "description": "Email address used for contact when personal takeover delivery method is selected.",
+            "format": "email",
+            "nullable": true
+          },
+          "contactPhoneNumber": {
+            "pattern": "^\\+\\d{1,3}-\\d{6,10}$",
+            "type": "string",
+            "description": "Phone number used for contact when personal takeover delivery method is selected.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplainProductExternalModel": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the product within the complaint.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the nomenclature (or product).",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "description": "Nomenclature code - 7 A-Z-0-9 characters referring to the commodity, color and size of the product (in case of the\r\ngoods).",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Description (note) which was entered when the complaint was filed. If none was entered, generated based off the\r\ncontent.",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "description": "The amount of pieces of the given nomenclature the complaint is filed for.",
+            "format": "double"
+          },
+          "unitExpectedPrice": {
+            "type": "number",
+            "description": "The price which was expected, contrary to which was charged. If the price is not the subject of the complaint, this\r\nvalue is 0.",
+            "format": "double"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "The code of the currency the unitExpectedPrice is in. Empty if unitExpectedPrice is 0.",
+            "nullable": true
+          },
+          "isCanceled": {
+            "type": "boolean",
+            "description": "Whether the complaint was cancelled for this product."
+          },
+          "isReturn": {
+            "type": "boolean",
+            "description": "Whether the goods are being returned."
+          },
+          "type": {
+            "type": "string",
+            "description": "Name of the type of the complaint filed for this product.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplainReturnCountryExternalModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The recipient company name on the goods return address.",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "description": "The street and number on the goods return address.",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "The city name on the goods return address.",
+            "nullable": true
+          },
+          "countryName": {
+            "type": "string",
+            "description": "The country name on the goods return address.",
+            "nullable": true
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "The zip code on the goods return address.",
+            "nullable": true
+          },
+          "recipient": {
+            "type": "string",
+            "description": "The recipient name on the goods return address.",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "The contact number to obtain more information about your complaint.",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "description": "The contact email to obtain more information about your complaint.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplaintExternalModel": {
+        "type": "object",
+        "properties": {
+          "contractId": {
+            "type": "string",
+            "description": "The ID of the contract (order) the complaint has been filed for. Starting with KT.",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "description": "The date and time when the complaint was filed.",
+            "format": "date-time"
+          },
+          "note": {
+            "type": "string",
+            "description": "A brief summarization of the complaint, generated out of its contents, or entered manually by the user.",
+            "nullable": true
+          },
+          "isCancelled": {
+            "type": "boolean",
+            "description": "Whether the complaint was cancelled."
+          },
+          "complaintType": {
+            "type": "string",
+            "description": "Longer summarization of the complaint.",
+            "nullable": true
+          },
+          "complaintMainStatus": {
+            "type": "string",
+            "description": "The current status of the complaint - reflects whether the complaint was accepted or refused.",
+            "nullable": true
+          },
+          "statusName": {
+            "type": "string",
+            "description": "The current status of the complaint - reflects the status the complaint is in within the workflow.",
+            "nullable": true
+          },
+          "wayOfReturnGoods": {
+            "type": "string",
+            "description": "The way in which the goods are to be returned.",
+            "nullable": true
+          },
+          "customerInstruction": {
+            "type": "string",
+            "description": "The preferred way of resolving the complaint.",
+            "nullable": true
+          },
+          "hasReturns": {
+            "type": "boolean",
+            "description": "Whether there are any goods to be returned."
+          },
+          "isPickupCreated": {
+            "type": "boolean",
+            "description": "Whether there was transport (pick-up service) already created. For doing so, use the e-shop."
+          },
+          "isWithPickup": {
+            "type": "boolean",
+            "description": "Whether there is a transport (pick-up service) ."
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplainProductExternalModel"
+            },
+            "description": "All products and information about them in the complaint.",
+            "nullable": true
+          },
+          "returnAddress": {
+            "$ref": "#/components/schemas/ComplainReturnCountryExternalModel"
+          },
+          "id": {
+            "type": "string",
+            "description": "The complaint's unique ID.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplaintListExternalModel": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Date and time the complaint was filed in.",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique ID of the complaint.",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of the complaint (generated out of its contents).",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "description": "The current status of the complaint.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Description (note) which was entered when the complaint was filed. If none was entered, generated based off the type.",
+            "nullable": true
+          },
+          "isCancelled": {
+            "type": "boolean",
+            "description": "Whether the complaint was cancelled."
+          }
+        },
+        "additionalProperties": false
+      },
+      "CookieLogin": {
+        "type": "object",
+        "properties": {
+          "unique_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "full_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "karat_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "company_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "price_level": {
+            "type": "string",
+            "nullable": true
+          },
+          "partner_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "company_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "gdpr": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "nbf": {
+            "type": "string",
+            "nullable": true
+          },
+          "exp": {
+            "type": "string",
+            "nullable": true
+          },
+          "iss": {
+            "type": "string",
+            "nullable": true
+          },
+          "aud": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CountryDeliveryListModel": {
+        "type": "object",
+        "properties": {
+          "deliveryId": {
+            "type": "integer",
+            "description": "The unique ID of the delivery allowed on the given country. Check for more in delivery-method.",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeliveryListModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The unique ID of the delivery method.",
+            "format": "int64"
+          },
+          "code": {
+            "type": "string",
+            "description": "Shorthand code of the delivery method.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The full name of the delivery method.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeliveryPaymentListModel": {
+        "type": "object",
+        "properties": {
+          "deliveryId": {
+            "type": "integer",
+            "description": "The ID of the delivery method.",
+            "format": "int64"
+          },
+          "paymentId": {
+            "type": "integer",
+            "description": "The ID of an allowed payment method.",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IntPtr": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "InvoiceDeliveryTypeListModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The unique invoice delivery type ID.",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "description": "The full name of the invoice delivery type.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InvoiceDetailModel": {
+        "type": "object",
+        "properties": {
+          "complaintAllowed": {
+            "type": "boolean",
+            "description": "Whether it is still possible to return or claim."
+          },
+          "isCancelled": {
+            "type": "boolean",
+            "description": "Whether the invoice was cancelled."
+          },
+          "isTransportInvoice": {
+            "type": "boolean",
+            "description": "Whether the invoice is for Malfini transportation service."
+          },
+          "invoiceTypeName": {
+            "type": "string",
+            "description": "The invoice type name.",
+            "nullable": true
+          },
+          "issueNoteId": {
+            "type": "string",
+            "description": "The ID of the issue note.",
+            "nullable": true
+          },
+          "orderId": {
+            "type": "string",
+            "description": "The unique ID of the corresponding order, starting with KT.",
+            "nullable": true
+          },
+          "orderDocumentId": {
+            "type": "string",
+            "description": "The unique ID of the delivery within the order the invoice is for.",
+            "nullable": true
+          },
+          "customOrderId": {
+            "type": "string",
+            "description": "Your own custom name or ID for the corresponding order.",
+            "nullable": true
+          },
+          "invoiceAddressCity": {
+            "type": "string",
+            "description": "The invoice's address city name.",
+            "nullable": true
+          },
+          "invoiceAddressCountryName": {
+            "type": "string",
+            "description": "The invoicee's address country name.",
+            "nullable": true
+          },
+          "invoiceAddressName": {
+            "type": "string",
+            "description": "The invoice's address first line.",
+            "nullable": true
+          },
+          "invoiceAddressStreet": {
+            "type": "string",
+            "description": "The invoice's address street and number line.",
+            "nullable": true
+          },
+          "invoiceAddressZipCode": {
+            "type": "string",
+            "description": "The invoice's address zip code.",
+            "nullable": true
+          },
+          "regNumber": {
+            "type": "string",
+            "description": "The invoicee's registration number.",
+            "nullable": true
+          },
+          "vatNumber": {
+            "type": "string",
+            "description": "The invoicee's vat number.",
+            "nullable": true
+          },
+          "deliveryAddressCity": {
+            "type": "string",
+            "description": "The delivery address city name.",
+            "nullable": true
+          },
+          "deliveryAddressCountryName": {
+            "type": "string",
+            "description": "The delivery address country name.",
+            "nullable": true
+          },
+          "deliveryAddressName": {
+            "type": "string",
+            "description": "The delivery address first line.",
+            "nullable": true
+          },
+          "deliveryAddressStreet": {
+            "type": "string",
+            "description": "The delivery address street and number line.",
+            "nullable": true
+          },
+          "deliveryAddressZipCode": {
+            "type": "string",
+            "description": "The delivery address zip code.",
+            "nullable": true
+          },
+          "mainAddressCity": {
+            "type": "string",
+            "description": "The main address city name.",
+            "nullable": true
+          },
+          "mainAddressCountryName": {
+            "type": "string",
+            "description": "The main address country name.",
+            "nullable": true
+          },
+          "mainAddressName": {
+            "type": "string",
+            "description": "The main address first line.",
+            "nullable": true
+          },
+          "mainAddressStreet": {
+            "type": "string",
+            "description": "The main address street and number line.",
+            "nullable": true
+          },
+          "mainAddressZipCode": {
+            "type": "string",
+            "description": "The main address zip code.",
+            "nullable": true
+          },
+          "variableSymbol": {
+            "type": "string",
+            "description": "The variable symbol for the payment.",
+            "nullable": true
+          },
+          "constantSymbol": {
+            "type": "string",
+            "description": "The constant symbol for the payment.",
+            "nullable": true
+          },
+          "supplierVatNumber": {
+            "type": "string",
+            "description": "The VAT number of the supplier.",
+            "nullable": true
+          },
+          "bankBranch": {
+            "type": "string",
+            "description": "The supplier's bank name.",
+            "nullable": true
+          },
+          "bankBankAccountNumber": {
+            "type": "string",
+            "description": "The supplier's bank account number.",
+            "nullable": true
+          },
+          "bankCode": {
+            "type": "string",
+            "description": "The supplier's bank account's bank code.",
+            "nullable": true
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The due date of the invoice payment.",
+            "format": "date-time"
+          },
+          "dateTaxableSupply": {
+            "type": "string",
+            "description": "Date of taxable payment.",
+            "format": "date-time"
+          },
+          "invoiceDate": {
+            "type": "string",
+            "description": "Date of the invoice.",
+            "format": "date-time"
+          },
+          "deliveryName": {
+            "type": "string",
+            "description": "The name of the delivery type.",
+            "nullable": true
+          },
+          "paymentMethodName": {
+            "type": "string",
+            "description": "The name of the payment method.",
+            "nullable": true
+          },
+          "issuedBy": {
+            "type": "string",
+            "description": "Who was the invoice issued by.",
+            "nullable": true
+          },
+          "invoiceDeliveryTypeName": {
+            "type": "string",
+            "description": "The method delivering the invoice document.",
+            "nullable": true
+          },
+          "initialText": {
+            "type": "string",
+            "description": "Description of what the invoice is for.",
+            "nullable": true
+          },
+          "footerText": {
+            "type": "string",
+            "description": "Footer statements.",
+            "nullable": true
+          },
+          "taxationTypeName": {
+            "type": "string",
+            "description": "The type of the taxation.",
+            "nullable": true
+          },
+          "foreignExchange": {
+            "type": "number",
+            "description": "",
+            "format": "double"
+          },
+          "foreignExchangeAdvance": {
+            "type": "number",
+            "description": "",
+            "format": "double"
+          },
+          "foreignExchangeMinusAdvance": {
+            "type": "number",
+            "description": "",
+            "format": "double"
+          },
+          "foreignExchangeNetPrice": {
+            "type": "number",
+            "description": "",
+            "format": "double"
+          },
+          "foreignExchangeRound": {
+            "type": "number",
+            "description": "",
+            "format": "double"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "The code of the payment currency.",
+            "nullable": true
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceProductModel"
+            },
+            "description": "",
+            "nullable": true
+          },
+          "taxItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceTaxItemModel"
+            },
+            "description": "",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique invoice ID.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InvoiceListModel": {
+        "type": "object",
+        "properties": {
+          "variableSymbol": {
+            "type": "string",
+            "description": "The variable symbol for the payment.",
+            "nullable": true
+          },
+          "invoice": {
+            "type": "string",
+            "description": "The unique invoice ID.",
+            "nullable": true
+          },
+          "complaintAllowed": {
+            "type": "boolean",
+            "description": "Whether it is still possible to return or claim."
+          },
+          "dueDate": {
+            "type": "string",
+            "description": "The due date of the invoice.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "foreignExchange": {
+            "type": "number",
+            "description": "The total",
+            "format": "double"
+          },
+          "foreignExchangeToPay": {
+            "type": "number",
+            "description": "The total amount left to pay.",
+            "format": "double"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "The code of the payment currency.",
+            "nullable": true
+          },
+          "invoiceDate": {
+            "type": "string",
+            "description": "The date the invoice was issued at.",
+            "format": "date-time"
+          },
+          "issueNoteId": {
+            "type": "string",
+            "description": "The ID of the issue note.",
+            "nullable": true
+          },
+          "order": {
+            "type": "string",
+            "description": "The unique ID of the corresponding order, starting with KT.",
+            "nullable": true
+          },
+          "paidDate": {
+            "type": "string",
+            "description": "The date of payment.",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InvoiceProductModel": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "The amount of pieces.",
+            "format": "double"
+          },
+          "exchangeRate": {
+            "type": "number",
+            "description": "The exchange rate for the item.",
+            "format": "double"
+          },
+          "foreignExchange": {
+            "type": "number",
+            "description": "",
+            "format": "double"
+          },
+          "netPrice": {
+            "type": "number",
+            "description": "",
+            "format": "double"
+          },
+          "productCode": {
+            "type": "string",
+            "description": "The code of the item (equal to productSizeCode for products).",
+            "nullable": true
+          },
+          "productName": {
+            "type": "string",
+            "description": "The name of the item.",
+            "nullable": true
+          },
+          "unitNetPrice": {
+            "type": "number",
+            "description": "The price of one piece.",
+            "format": "double"
+          },
+          "vatCode": {
+            "type": "string",
+            "description": "The VAT code.",
+            "nullable": true
+          },
+          "vatRate": {
+            "type": "number",
+            "description": "The percentage value of the VAT rate.",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InvoiceTaxItemModel": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "The amount of items.",
+            "format": "double"
+          },
+          "exchangeRate": {
+            "type": "number",
+            "description": "The exchange rate.",
+            "format": "double"
+          },
+          "foreignExchange": {
+            "type": "number",
+            "description": "",
+            "format": "double"
+          },
+          "itemTypeName": {
+            "type": "string",
+            "description": "The name of the item type.",
+            "nullable": true
+          },
+          "netPrice": {
+            "type": "number",
+            "description": "",
+            "format": "double"
+          },
+          "unitNetPrice": {
+            "type": "number",
+            "description": "The unit nett price.",
+            "format": "double"
+          },
+          "vatCode": {
+            "type": "string",
+            "description": "The VAT code.",
+            "nullable": true
+          },
+          "vatRate": {
+            "type": "number",
+            "description": "The VAT rate.",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LanguageModel": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "ISO 639-1 code.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Language name.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LogoutDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderDeliveryExternalModel": {
+        "type": "object",
+        "properties": {
+          "addressCity": {
+            "type": "string",
+            "description": "The city name on the address.",
+            "nullable": true
+          },
+          "addressCountry": {
+            "type": "string",
+            "description": "The country on the address.",
+            "nullable": true
+          },
+          "addressName": {
+            "type": "string",
+            "description": "Your name of the address.",
+            "nullable": true
+          },
+          "addressRecipient": {
+            "type": "string",
+            "description": "The recipient's name on the address.",
+            "nullable": true
+          },
+          "addressStreet": {
+            "type": "string",
+            "description": "The street name and house number.",
+            "nullable": true
+          },
+          "addressZipCode": {
+            "type": "string",
+            "description": "The zip code.",
+            "nullable": true
+          },
+          "addressPhone": {
+            "type": "string",
+            "description": "The recipient's contact phone.",
+            "nullable": true
+          },
+          "addressEmail": {
+            "type": "string",
+            "description": "The recipient's contact email.",
+            "nullable": true
+          },
+          "customerBankAccountNumber": {
+            "type": "string",
+            "description": "The bank account number for the payment from your customer to be sent to. Used if you have used direct to your\r\ncustomer service combined with cash on delivery.",
+            "nullable": true
+          },
+          "customerBankCode": {
+            "type": "string",
+            "description": "The bank account code for the payment from your customer  to be sent to. Used if you have used direct to your\r\ncustomer service combined with cash on delivery.",
+            "nullable": true
+          },
+          "customerVariableSymbol": {
+            "type": "string",
+            "description": "The variable symbol for the payment from your customer  to be sent with. Used if you have used direct to your\r\ncustomer service.",
+            "nullable": true
+          },
+          "isCashOnDelivery": {
+            "type": "boolean",
+            "description": "Whether there is cash on delivery to be paid."
+          },
+          "cashOnDeliveryPrice": {
+            "type": "number",
+            "description": "Price to be paid on delivery, if cash on delivery payment method was used.",
+            "format": "double"
+          },
+          "confirmedRevision": {
+            "type": "integer",
+            "description": "The number of order's revision the delivery is part of.",
+            "format": "int32"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "The code of the currency for the payment.",
+            "nullable": true
+          },
+          "customerAddressCity": {
+            "type": "string",
+            "description": "The city name on the address, used if you have used direct to your customer service.",
+            "nullable": true
+          },
+          "customerAddressCountry": {
+            "type": "string",
+            "description": "The country on the address, used if you have used direct to your customer service.",
+            "nullable": true
+          },
+          "customerAddressName": {
+            "type": "string",
+            "description": "Your name of the address, used if you have used direct to your customer service.",
+            "nullable": true
+          },
+          "customerAddressRecipient": {
+            "type": "string",
+            "description": "The recipient's name on the address, used if you have used direct to your customer service.",
+            "nullable": true
+          },
+          "customerAddressStreet": {
+            "type": "string",
+            "description": "The street name and house number, used if you have used direct to your customer service.",
+            "nullable": true
+          },
+          "customerAddressZipCode": {
+            "type": "string",
+            "description": "The zip code, used if you have used direct to your customer service.",
+            "nullable": true
+          },
+          "customerEmail": {
+            "type": "string",
+            "description": "The customer's contact email, used if you have used direct to your customer service.",
+            "nullable": true
+          },
+          "customerPhone": {
+            "type": "string",
+            "description": "The customer's contact phone number, used if you have used direct to your customer service.",
+            "nullable": true
+          },
+          "customerAttachInvoice": {
+            "type": "boolean",
+            "description": "Whether your own invoice is to be added into the package before shipping, used if you have used direct to your\r\ncustomer service."
+          },
+          "customerIsOwnAddress": {
+            "type": "boolean",
+            "description": "Whether the return address on the shipping label is to be our warehouse address, or the delivery address you chose\r\nfor the order. Used if you have used direct to your customer service."
+          },
+          "delivery": {
+            "type": "string",
+            "description": "The delivery method's name.",
+            "nullable": true
+          },
+          "despatchDate": {
+            "type": "string",
+            "description": "The date when the order is to be despatched.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isCustomer": {
+            "type": "boolean",
+            "description": "Whether the direct to your customer service was used."
+          },
+          "deliveryStatus": {
+            "type": "string",
+            "description": "The status name of the delivery.",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderDeliveryItemExternalModel"
+            },
+            "description": "Contains information about items within the order.",
+            "nullable": true
+          },
+          "orderDeliveryRevision": {
+            "type": "integer",
+            "description": "The id of the revision the delivery is part of.",
+            "format": "int32"
+          },
+          "netPrice": {
+            "type": "number",
+            "description": "The total price, without VAT applied.",
+            "format": "double"
+          },
+          "price": {
+            "type": "number",
+            "description": "The total price, with VAT applied.",
+            "format": "double"
+          },
+          "requiredDeliveryDate": {
+            "type": "string",
+            "description": "The required delivery date of the order.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "taxationType": {
+            "type": "string",
+            "description": "Indicates, whether VAT is to be applied.",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique ID of the given delivery within the order.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderDeliveryItemExternalModel": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Amount of pieces.",
+            "format": "double"
+          },
+          "shippedAmount": {
+            "type": "number",
+            "description": "The amount of pieces which was actually shipped.",
+            "format": "double"
+          },
+          "displayOrder": {
+            "type": "integer",
+            "description": "Display order on the order.",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the item.",
+            "nullable": true
+          },
+          "netPrice": {
+            "type": "number",
+            "description": "Total net price of the items.",
+            "format": "double"
+          },
+          "nomenclatureCode": {
+            "type": "string",
+            "description": "Nomenclature code - 7 A-Z-0-9 characters referring to the commodity, color and size of the product (in case of the\r\ngoods).",
+            "nullable": true
+          },
+          "nomenclatureId": {
+            "type": "string",
+            "description": "Internal unique ID of the nomenclature.",
+            "nullable": true
+          },
+          "unitNetPrice": {
+            "type": "number",
+            "description": "Net price of a single item.",
+            "format": "double"
+          },
+          "orderRevision": {
+            "type": "integer",
+            "description": "ID of the order's revision the item was added in.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderExternalModel": {
+        "type": "object",
+        "properties": {
+          "confirmDate": {
+            "type": "string",
+            "description": "Date and time when the order was confirmed (placed).",
+            "format": "date-time",
+            "nullable": true
+          },
+          "confirmedBy": {
+            "type": "string",
+            "description": "Username of the customer service employee who confirmed the last contract's revision.",
+            "nullable": true
+          },
+          "confirmedRevision": {
+            "type": "integer",
+            "description": "ID of the current order's revision. Only the newest one is being returned.",
+            "format": "int32"
+          },
+          "note": {
+            "type": "string",
+            "description": "Additional note for the customer service.",
+            "nullable": true
+          },
+          "delivery": {
+            "type": "string",
+            "description": "Name of the delivery method used.",
+            "nullable": true
+          },
+          "invoiceDeliveryType": {
+            "type": "string",
+            "description": "Name of the invoice delivery method used.",
+            "nullable": true
+          },
+          "customOrderId": {
+            "type": "string",
+            "description": "Your own custom name or ID for the order.",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "description": "Name of the current status the order is in.",
+            "nullable": true
+          },
+          "paymentMethod": {
+            "type": "string",
+            "description": "Name of the payment method used.",
+            "nullable": true
+          },
+          "paymentMethodCode": {
+            "type": "string",
+            "description": "Shorthand code of the payment method. used.",
+            "nullable": true
+          },
+          "deliveries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderDeliveryExternalModel"
+            },
+            "description": "Contains information about individual deliveries within the order.",
+            "nullable": true
+          },
+          "orderCode": {
+            "type": "string",
+            "description": "The unique order ID, starting with KT.",
+            "nullable": true
+          },
+          "deliveryDateFirst": {
+            "type": "string",
+            "description": "The first delivery date within the order.",
+            "format": "date-time"
+          },
+          "deliveryDateLast": {
+            "type": "string",
+            "description": "The last delivery date within the order (same as the first one if only 1 was used).",
+            "format": "date-time"
+          },
+          "netPrice": {
+            "type": "number",
+            "description": "The price of the order, without VAT applied.",
+            "format": "double"
+          },
+          "isPaymentDone": {
+            "type": "boolean",
+            "description": "Whether the order was already paid for."
+          },
+          "unpaidAmount": {
+            "type": "number",
+            "description": "The remaining amount to be paid for the order. Note that for actually processing the payment, you currently need to\r\nuse the e-shop.",
+            "format": "double"
+          },
+          "price": {
+            "type": "number",
+            "description": "The final price of the order, with VAT applied.",
+            "format": "double"
+          },
+          "unpaidAmountCurrencyCode": {
+            "type": "string",
+            "description": "The currency code for the payment.",
+            "nullable": true
+          },
+          "isCanceled": {
+            "type": "boolean",
+            "description": "Whether the order was cancelled."
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderListExternalModel": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "string",
+            "description": "The unique order ID, starting with KT.",
+            "nullable": true
+          },
+          "addressId": {
+            "type": "integer",
+            "description": "The unique address ID the order was shipped to.",
+            "format": "int64"
+          },
+          "addressName": {
+            "type": "string",
+            "description": "The name of the address the order was shipped to.",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "description": "The unique ID of the order's status.",
+            "nullable": true
+          },
+          "payment": {
+            "type": "string",
+            "description": "The order's payment method's name.",
+            "nullable": true
+          },
+          "customOrderId": {
+            "type": "string",
+            "description": "Own custom order number, if you have entered any when placing the order.",
+            "nullable": true
+          },
+          "delivery": {
+            "type": "string",
+            "description": "The order's delivery method's name.",
+            "nullable": true
+          },
+          "requiredDeliveryDate": {
+            "type": "string",
+            "description": "The due date of the delivery.",
+            "format": "date-time"
+          },
+          "isCancelled": {
+            "type": "boolean",
+            "description": "Whether the order was cancelled."
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParcelListDto": {
+        "type": "object",
+        "properties": {
+          "cashOnDelivery": {
+            "type": "number",
+            "format": "double"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "invoice": {
+            "type": "string",
+            "nullable": true
+          },
+          "currencyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "type": "string",
+            "nullable": true
+          },
+          "trackingUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaymentListModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The ID of the payment method.",
+            "format": "int64"
+          },
+          "code": {
+            "type": "string",
+            "description": "Shorthand code.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "ProductAlternativeModel": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The alternative product's code.",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "description": "The alternative's title.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductAttributeModel": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The additional attribute's name.",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "description": "Unique code of the product attribute.",
+            "nullable": true
+          },
+          "text": {
+            "type": "string",
+            "description": "The additional attribute's value.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductAvailabilityExternalDto": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "description": "Amount in stock.",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date of the stock amount. There may be several different dates and associated quantities for 1 given productSizeCode,\r\nrepresenting more goods being on the way to the warehouse.",
+            "format": "date-time"
+          },
+          "productSizeCode": {
+            "type": "string",
+            "description": "Nomenclature code - 7 A-Z-0-9 characters referring to the commodity, color and size of the product (in case of the\r\ngoods).",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductCollectionModel": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The collection's Karat code (e.g. NOVELTIES).",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The collection's translated name.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductImageModel": {
+        "type": "object",
+        "properties": {
+          "viewCode": {
+            "type": "string",
+            "description": "A-Z single letter view code of the product image.",
+            "nullable": true
+          },
+          "link": {
+            "type": "string",
+            "description": "The image URL.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductModel": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The 3-character alphanumeric code of the product.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The product's name.",
+            "nullable": true
+          },
+          "categoryName": {
+            "type": "string",
+            "description": "The name of the category the product belongs to.",
+            "nullable": true
+          },
+          "categoryCode": {
+            "type": "string",
+            "description": "Unique category ID.",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "description": "The product's gender (or width in case of boots).",
+            "nullable": true
+          },
+          "genderCode": {
+            "type": "string",
+            "description": "Unique gender ID.",
+            "nullable": true
+          },
+          "trademark": {
+            "type": "string",
+            "description": "The product's trademark.",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "description": "The product's type.",
+            "nullable": true
+          },
+          "subtitle": {
+            "type": "string",
+            "description": "The product's subtitle on the e-shop.",
+            "nullable": true
+          },
+          "specification": {
+            "type": "string",
+            "description": "The product's summary/specification.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "The product's additional description.",
+            "nullable": true
+          },
+          "productCardPdf": {
+            "type": "string",
+            "description": "Link to the product's product card in the given language.",
+            "nullable": true
+          },
+          "sizeChartPdf": {
+            "type": "string",
+            "description": "Link to the product's size chart.",
+            "nullable": true
+          },
+          "userInformationPdf": {
+            "type": "string",
+            "description": "Link to the product's user information file.",
+            "nullable": true
+          },
+          "declarationPdf": {
+            "type": "string",
+            "description": "Link to the declaration about the product.",
+            "nullable": true
+          },
+          "technicalSpecificationPdf": {
+            "type": "string",
+            "description": "Link to the product's technical specification.",
+            "nullable": true
+          },
+          "certificationPdf": {
+            "type": "string",
+            "description": "Link to the product's certification file.",
+            "nullable": true
+          },
+          "additionalInformationPdf": {
+            "type": "string",
+            "description": "Link to the product's additional information file.",
+            "nullable": true
+          },
+          "alternatives": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductAlternativeModel"
+            },
+            "description": "The alternatives to this product (different genders).",
+            "nullable": true
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductVariantModel"
+            },
+            "description": "The variants the product is available in (for example colors).",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Product object"
+      },
+      "ProductPriceExternalDto": {
+        "type": "object",
+        "properties": {
+          "productSizeCode": {
+            "type": "string",
+            "description": "Nomenclature code - 7 A-Z-0-9 characters referring to the commodity, color and size of the product.",
+            "nullable": true
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Minimum amount of pieces which need to be ordered for this price to apply. Note that this quantity discount may stack\r\nup with other products with the same price, within the same commodity.",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "description": "The price value.",
+            "format": "double"
+          },
+          "currency": {
+            "type": "string",
+            "description": "The currency the price is in.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductRecommendedPriceExternalDto": {
+        "type": "object",
+        "properties": {
+          "productSizeCode": {
+            "type": "string",
+            "description": "Nomenclature code - 7 A-Z-0-9 characters referring to the commodity, color and size of the product.",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "description": "The price value.",
+            "format": "double"
+          },
+          "currency": {
+            "type": "string",
+            "description": "The currency the price is in.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductSizeModel": {
+        "type": "object",
+        "properties": {
+          "productSizeCode": {
+            "type": "string",
+            "description": "The nomenclature code.",
+            "nullable": true
+          },
+          "ean": {
+            "type": "string",
+            "description": "EAN code of the item.",
+            "nullable": true
+          },
+          "outlet": {
+            "type": "integer",
+            "description": "Discount on obsolete items. Null if the item is not on sale.",
+            "format": "int32",
+            "nullable": true
+          },
+          "sizeName": {
+            "type": "string",
+            "description": "The nomenclature's size's visual name.",
+            "nullable": true
+          },
+          "expeditionQuantity": {
+            "type": "integer",
+            "description": "The minimum amount for expedition to be allowed.",
+            "format": "int32"
+          },
+          "size": {
+            "type": "string",
+            "description": "The nomenclature's size code.",
+            "nullable": true
+          },
+          "sizeCode": {
+            "type": "string",
+            "description": "Unique code of the variant's size.",
+            "nullable": true
+          },
+          "boxDepth": {
+            "type": "number",
+            "description": "The depth (in cm) of a full wrap package",
+            "format": "double"
+          },
+          "boxHeight": {
+            "type": "number",
+            "description": "The height (in cm) of a full wrap package",
+            "format": "double"
+          },
+          "boxWidth": {
+            "type": "number",
+            "description": "The width (in cm) of a full wrap package",
+            "format": "double"
+          },
+          "boxCapacity": {
+            "type": "number",
+            "description": "The capacity (in pieces) of a full wrap package",
+            "format": "double"
+          },
+          "netWeight": {
+            "type": "number",
+            "description": "The net weight (in kg) of a single piece of the product",
+            "format": "double"
+          },
+          "grossWeight": {
+            "type": "number",
+            "description": "The gross weight (in kg) of a single piece of the product",
+            "format": "double"
+          },
+          "tariffNomenclature": {
+            "type": "string",
+            "description": "The traffic nomenclature ID",
+            "nullable": true
+          },
+          "volume": {
+            "type": "number",
+            "description": "Volume (in litres) of a single piece",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductVariantModel": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The variant's unique code (part of the product's nomenclature).",
+            "nullable": true
+          },
+          "colorCode": {
+            "type": "string",
+            "description": "Unique code of the given color of this product variant.",
+            "nullable": true
+          },
+          "colorIconLink": {
+            "type": "string",
+            "description": "Link to the color's icon.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The variant's visual name.",
+            "nullable": true
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductAttributeModel"
+            },
+            "description": "Additional parameters related to the product variant.",
+            "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductImageModel"
+            },
+            "description": "Contains images of the product variant.",
+            "nullable": true
+          },
+          "collections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductCollectionModel"
+            },
+            "description": "The collections this variant belongs to",
+            "nullable": true
+          },
+          "nomenclatures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductSizeModel"
+            },
+            "description": "The individual nomenclatures (or subvariants) under the product.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RefreshTokenDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Cookies": {
+        "type": "http",
+        "description": "JWT Authorization header using the Cookie scheme",
+        "scheme": "Cookies"
+      },
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme",
+        "scheme": "Bearer"
+      }
+    }
+  }
+}
