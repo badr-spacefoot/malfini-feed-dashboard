@@ -15,10 +15,23 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Checkout previous Pages snapshot
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: previous-pages
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
+
+      - name: Restore previous import history
+        run: |
+          mkdir -p data
+          if [ -f previous-pages/data/feed-cache.json ]; then
+            cp previous-pages/data/feed-cache.json data/feed-cache.json
+          fi
 
       - name: Import latest Malfini feed
         env:
