@@ -109,7 +109,7 @@ async function fetchDashboardSnapshot(refresh = false) {
     state.staticMode = false;
     return data;
   } catch (error) {
-    const data = await fetchJson("data/feed-cache.json");
+    const data = await fetchJson(`data/feed-cache.json?v=${Date.now()}`);
     state.staticMode = true;
     return data;
   }
