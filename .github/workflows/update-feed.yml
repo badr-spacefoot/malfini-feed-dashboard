@@ -43,7 +43,10 @@ jobs:
       - name: Prepare static Pages snapshot
         run: |
           mkdir -p public/data
+          FEED_FILE="feed-cache-${GITHUB_RUN_ID}.json"
+          cp data/feed-cache.json "public/data/${FEED_FILE}"
           cp data/feed-cache.json public/data/feed-cache.json
+          printf '{"feedPath":"data/%s","runId":"%s"}\n' "${FEED_FILE}" "${GITHUB_RUN_ID}" > public/feed-version.json
 
       - name: Publish GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
