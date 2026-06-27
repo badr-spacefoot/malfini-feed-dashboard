@@ -132,6 +132,7 @@ async function loadDashboard(refresh = false) {
     const data = await fetchDashboardSnapshot(refresh);
     state.data = data;
     state.rows = data.flatSizes || [];
+    state.currentRowBySnapshotKey = null;
     state.categoryByProductCode = new Map((data.products || []).map((product) => [product.code, product.categoryName || ""]));
     renderDashboard();
     const importedAt = new Date(data.importedAt).toLocaleString();
@@ -662,9 +663,15 @@ function renderChanges() {
   els.changes.innerHTML = noteList([
     ["New sizes", changes.newSizes?.length || 0, "teal"],
     ["Removed sizes", changes.removedSizes?.length || 0, "bad"],
-    ["Stock changed", changes.stockChanged?.length || 0, "warn"],
-    ["PA changed", changes.priceChanged?.length || 0, "warn"]
+    ["Stock changed", changeCount(changes, "stockChanged"), "warn"],
+    ["PA changed", changeCount(changes, "priceChanged"), "warn"]
   ]);
+}
+
+function changeCount(changes, key) {
+  const explicit = changes?.[`${key}Count`];
+  if (explicit !== undefined && explicit !== null) return Number(explicit || 0);
+  return changes?.[key]?.length || 0;
 }
 
 function renderQuality() {
@@ -861,17 +868,50 @@ function stockSnapshots() {
 }
 
 function compareStockSnapshots(before, after) {
-  const beforeRows = new Map((before.rows || []).map((row) => [row.productSizeCode || row.code, row]));
+  const beforeRows = new Map((before.rows || []).map((row) => [snapshotRowKey(row), row]));
   const movements = [];
-  for (const row of after.rows || []) {
-    const key = row.productSizeCode || row.code;
+  for (const afterRow of after.rows || []) {
+    const key = snapshotRowKey(afterRow);
     const old = beforeRows.get(key);
     if (!old) continue;
-    const delta = Number(row.currentStock || 0) - Number(old.currentStock || 0);
+    const beforeStock = snapshotRowStock(old);
+    const afterStock = snapshotRowStock(afterRow);
+    const delta = afterStock - beforeStock;
     if (!delta) continue;
-    movements.push({ before: old, after: row, delta });
+    movements.push({
+      before: hydrateSnapshotRow(old, beforeStock),
+      after: hydrateSnapshotRow(afterRow, afterStock),
+      delta
+    });
   }
   return movements;
+}
+
+function snapshotRowKey(row) {
+  return row?.k || row?.key || row?.productSizeCode || row?.code || "";
+}
+
+function snapshotRowStock(row) {
+  return Number(row?.s ?? row?.stock ?? row?.currentStock ?? 0);
+}
+
+function hydrateSnapshotRow(row, stock) {
+  const key = snapshotRowKey(row);
+  const current = currentRowBySnapshotKey().get(key);
+  return {
+    ...(current || {}),
+    ...row,
+    code: current?.code || row.code || key,
+    productSizeCode: current?.productSizeCode || row.productSizeCode || key,
+    currentStock: stock
+  };
+}
+
+function currentRowBySnapshotKey() {
+  if (!state.currentRowBySnapshotKey) {
+    state.currentRowBySnapshotKey = new Map((state.rows || []).map((row) => [snapshotRowKey(row), row]));
+  }
+  return state.currentRowBySnapshotKey;
 }
 
 function renderPeriodMovementCard(item) {

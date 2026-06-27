@@ -161,6 +161,8 @@ function normalizeFeeds({ products, availabilities, prices, recommendedPrices, p
   const changes = {
     newSizes: [],
     removedSizes: [],
+    stockChangedCount: 0,
+    priceChangedCount: 0,
     stockChanged: [],
     priceChanged: []
   };
@@ -172,10 +174,22 @@ function normalizeFeeds({ products, availabilities, prices, recommendedPrices, p
       continue;
     }
     if (Number(old.currentStock || 0) !== Number(size.currentStock || 0)) {
-      changes.stockChanged.push({ before: old, after: size });
+      changes.stockChangedCount += 1;
+      if (changes.stockChanged.length < 50) {
+        changes.stockChanged.push({
+          before: compactChangeSize(old),
+          after: compactChangeSize(size)
+        });
+      }
     }
     if (Number(old.wholesalePrice || 0) !== Number(size.wholesalePrice || 0)) {
-      changes.priceChanged.push({ before: old, after: size });
+      changes.priceChangedCount += 1;
+      if (changes.priceChanged.length < 50) {
+        changes.priceChanged.push({
+          before: compactChangeSize(old),
+          after: compactChangeSize(size)
+        });
+      }
     }
   }
   for (const [code, old] of previousSizes.entries()) {
@@ -214,12 +228,12 @@ function normalizeFeeds({ products, availabilities, prices, recommendedPrices, p
   };
   const importHistory = [...previousHistory, historyEntry].slice(-90);
   const previousStockSnapshots = Array.isArray(previous?.stockSnapshots) && previous.stockSnapshots.length
-    ? previous.stockSnapshots
+    ? previous.stockSnapshots.map(compactStockSnapshot)
     : previous?.flatSizes?.length
       ? [buildStockSnapshot(previous.importedAt, previous.flatSizes)]
       : [];
   const stockSnapshot = buildStockSnapshot(historyEntry.importedAt, flatSizes);
-  const stockSnapshots = [...previousStockSnapshots, stockSnapshot].slice(-45);
+  const stockSnapshots = [...previousStockSnapshots, stockSnapshot].slice(-360);
 
   return {
     importedAt: historyEntry.importedAt,
@@ -252,22 +266,43 @@ function normalizeFeeds({ products, availabilities, prices, recommendedPrices, p
   };
 }
 
+function compactChangeSize(size) {
+  return {
+    code: size.code,
+    productSizeCode: size.productSizeCode,
+    pairCode: size.pairCode || size.productCode,
+    productName: size.productName,
+    color: size.color,
+    sizeName: size.sizeName,
+    sizeCode: size.sizeCode,
+    currentStock: Number(size.currentStock || 0),
+    wholesalePrice: size.wholesalePrice ?? null,
+    wholesaleCurrency: size.wholesaleCurrency ?? null
+  };
+}
+
 function buildStockSnapshot(importedAt, rows) {
   return {
     importedAt: importedAt || new Date().toISOString(),
     rows: (rows || []).map((size) => ({
-      code: size.code,
-      productSizeCode: size.productSizeCode,
-      pairCode: size.pairCode,
-      productCode: size.productCode,
-      productName: size.productName,
-      color: size.color,
-      colorCode: size.colorCode,
-      sizeName: size.sizeName,
-      sizeCode: size.sizeCode,
-      currentStock: Number(size.currentStock || 0)
-    }))
+      k: stockSnapshotKey(size),
+      s: Number(size.currentStock ?? size.stock ?? size.s ?? 0)
+    })).filter((row) => row.k)
   };
+}
+
+function compactStockSnapshot(snapshot) {
+  return {
+    importedAt: snapshot?.importedAt || new Date().toISOString(),
+    rows: (snapshot?.rows || []).map((row) => ({
+      k: stockSnapshotKey(row),
+      s: Number(row.currentStock ?? row.stock ?? row.s ?? 0)
+    })).filter((row) => row.k)
+  };
+}
+
+function stockSnapshotKey(row) {
+  return row?.k || row?.key || row?.productSizeCode || row?.code || "";
 }
 
 function csvEscape(value) {
