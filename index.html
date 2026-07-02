@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Malfini Feed Dashboard</title>
+    <link rel="stylesheet" href="styles.css?v=20260628-compact-history">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <div class="hero-topline">
+            <p class="eyebrow">Spacefoot supplier monitoring</p>
+            <div class="hero-live">
+              <span id="stickyFeedState">Loading feed...</span>
+              <span id="stickyImportState">Latest import pending</span>
+            </div>
+          </div>
+          <h1>Malfini Feed Dashboard</h1>
+          <p class="subtitle">B2B product, stock, PA, and MSRP monitoring</p>
+          <p id="lastUpdated" class="last-updated">Loading feed snapshot...</p>
+          <p id="status" class="header-status" role="status" aria-live="polite">Loading dashboard snapshot...</p>
+        </div>
+        <div class="hero-actions">
+          <button id="themeToggle" class="button secondary" type="button">Dark mode</button>
+          <button id="fullExportBtn" class="button secondary export-button" type="button">Download CSV</button>
+          <button id="refreshBtn" class="button secondary" type="button" title="Import latest feed">Import latest API</button>
+          <button id="reloadBtn" class="button primary" type="button" title="Reload local snapshot">Reload snapshot</button>
+        </div>
+      </header>
+
+      <main>
+        <section id="alert" class="alert" hidden></section>
+
+        <section class="kpi-grid" aria-label="Feed metrics">
+          <article class="kpi-card"><span>Products</span><strong id="productsCount">-</strong></article>
+          <article class="kpi-card"><span>Variants</span><strong id="variantsCount">-</strong></article>
+          <article class="kpi-card"><span>Sizes</span><strong id="sizesCount">-</strong></article>
+          <article class="kpi-card score"><span>In stock</span><strong id="inStockCount">-</strong></article>
+          <article class="kpi-card"><span>Out of stock</span><strong id="outStockCount">-</strong></article>
+          <article class="kpi-card"><span>Total stock units</span><strong id="totalStockCount">-</strong></article>
+          <article class="kpi-card"><span>Missing EAN</span><strong id="missingEanCount">-</strong></article>
+          <article class="kpi-card score"><span>Feed quality score</span><strong id="qualityScoreCount">-</strong></article>
+        </section>
+
+        <section class="dashboard-grid charts-grid" aria-label="Catalog charts">
+          <article class="panel chart-panel"><div class="panel-heading"><h2>Stock Status</h2><p>In-stock vs out-of-stock size rows</p></div><canvas id="stockStatusChart"></canvas></article>
+          <article class="panel chart-panel"><div class="panel-heading"><h2>Stock by Product Type</h2><p>Available units by Malfini category</p></div><canvas id="stockTypeChart"></canvas></article>
+          <article class="panel chart-panel"><div class="panel-heading"><h2>MSRP Distribution</h2><p>recommendedPrice buckets in EUR</p></div><canvas id="priceChart"></canvas></article>
+          <article class="panel chart-panel"><div class="panel-heading"><h2>Missing / Invalid Data</h2><p>EAN, image, PA, and product type checks</p></div><canvas id="missingChart"></canvas></article>
+        </section>
+
+        <section class="panel history-panel">
+          <div class="panel-heading"><h2>Recovery History</h2><p>Feed changes after each Malfini API import</p></div>
+          <div class="trend-grid" aria-label="Latest history deltas">
+            <article class="trend-card"><span>Products delta</span><strong id="deltaProducts">-</strong></article>
+            <article class="trend-card"><span>Variants delta</span><strong id="deltaVariants">-</strong></article>
+            <article class="trend-card"><span>Stock delta</span><strong id="deltaStock">-</strong></article>
+            <article class="trend-card"><span>Quality delta</span><strong id="deltaQuality">-</strong></article>
+          </div>
+          <div class="period-controls">
+            <label>Range<select id="periodPreset" aria-label="Period range">
+              <option value="1h">Last hour</option>
+              <option value="6h">Last 6 hours</option>
+              <option value="24h">Last 24 hours</option>
+              <option value="7d" selected>Last 7 days</option>
+              <option value="30d">Last month</option>
+              <option value="90d">Last 3 months</option>
+              <option value="custom">Custom range</option>
+            </select></label>
+            <label>From<input id="periodStart" type="datetime-local"></label>
+            <label>To<input id="periodEnd" type="datetime-local"></label>
+            <button id="applyPeriodBtn" class="button secondary" type="button">Apply period</button>
+            <span id="periodSummary">Stock period movement needs at least two snapshots.</span>
+          </div>
+          <div class="movement-list period-movement-list" id="periodMovementBody">
+            <div class="movement-empty">No period selected.</div>
+          </div>
+          <div class="history-layout">
+            <div class="history-chart"><canvas id="historyChart"></canvas></div>
+            <div class="table-wrap history-table">
+              <table><thead><tr><th>Date</th><th>Products</th><th>Sizes</th><th>Stock</th><th>Quality</th></tr></thead><tbody id="historyBody"><tr><td colspan="5">Loading...</td></tr></tbody></table>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard-grid two-column">
+          <article class="panel">
+            <div class="panel-heading"><h2>Feed Quality</h2><p>Detailed completeness checks</p></div>
+            <div class="quality-list" id="qualityDetail"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><h2>Recent Updates</h2><p>Stock movement in the selected range</p></div>
+            <div class="movement-list" id="recentUpdatesBody"><div class="movement-empty">Loading...</div></div>
+          </article>
+        </section>
+
+        <section class="dashboard-grid two-column">
+          <article class="panel">
+            <div class="panel-heading"><h2>New SKUs</h2><p>New `code` rows since previous import</p></div>
+            <div class="table-wrap movement-table"><table><thead><tr><th>SKU code</th><th>Main model</th><th>Product</th><th>Stock</th></tr></thead><tbody id="newProductsBody"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><h2>Likely Best Sellers</h2><p>Largest stock decreases in the selected range</p></div>
+            <div class="movement-list" id="stockMoversBody"><div class="movement-empty">Loading...</div></div>
+          </article>
+        </section>
+
+        <section class="panel top-types-panel">
+          <div class="panel-heading"><h2>Top Product Types</h2><p>Variant count, stock, and average MSRP</p></div>
+          <div class="table-wrap"><table><thead><tr><th>Product type</th><th>SKU rows</th><th>Total stock</th><th>Average MSRP</th></tr></thead><tbody id="productTypesBody"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+        </section>
+
+        <section class="dashboard-grid two-column catalog-grid">
+          <article class="panel catalog-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Catalog Search</h2>
+                <p>Filter, sort, and inspect Malfini models and SKUs</p>
+              </div>
+              <span id="resultCount" class="filter-summary">0 rows</span>
+            </div>
+            <div class="filters catalog-controls">
+              <label>Search<input id="searchInput" type="search" placeholder="SKU, product ID, pairCode, EAN, color, size"></label>
+              <label>Category<select id="categoryFilter" aria-label="Category filter">
+                <option value="">All categories</option>
+              </select></label>
+              <label>Manufacturer<select id="manufacturerFilter" aria-label="Manufacturer filter">
+                <option value="">All manufacturers</option>
+              </select></label>
+              <label>Stock<select id="stockFilter" aria-label="Stock filter">
+                <option value="">All stock states</option>
+                <option value="in">In stock</option>
+                <option value="out">Out of stock</option>
+                <option value="missing-price">Missing PA</option>
+                <option value="missing-ean">Missing EAN</option>
+              </select></label>
+              <label>EAN<select id="eanFilter" aria-label="EAN filter">
+                <option value="">All barcodes</option>
+                <option value="valid">Valid EAN</option>
+                <option value="missing">Missing barcode</option>
+              </select></label>
+              <label>Rows<select id="pageSizeSelect" aria-label="Rows">
+                <option value="100">100 rows</option>
+                <option value="250">250 rows</option>
+                <option value="500" selected>500 rows</option>
+                <option value="all">All rows</option>
+              </select></label>
+            </div>
+            <div class="catalog-mode-row">
+              <label class="switch-control">
+                <input id="groupProductsToggle" type="checkbox" checked>
+                <span class="switch-track" aria-hidden="true"><span></span></span>
+                <span class="switch-copy">
+                  <strong>Group by product</strong>
+                  <small>pairCode + colorCode</small>
+                </span>
+              </label>
+              <div class="formula-badge">
+                <span>SKU</span>
+                pairCode + colorCode + sizeCode
+              </div>
+            </div>
+            <div class="active-filter-row">
+              <div id="activeFilters" class="active-filters" aria-live="polite"></div>
+              <div class="filter-actions">
+                <button id="clearFiltersBtn" class="button compact subtle" type="button">Clear filters</button>
+                <button id="exportFilteredBtn" class="button compact subtle" type="button">Export filtered CSV</button>
+              </div>
+            </div>
+            <div class="table-wrap catalog-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th><button class="sort-button" type="button" data-sort-key="sku">SKU</button></th>
+                    <th>Barcode</th>
+                    <th><button class="sort-button" type="button" data-sort-key="product">Product</button></th>
+                    <th><button class="sort-button" type="button" data-sort-key="type">Type</button></th>
+                    <th>Status</th>
+                    <th><button class="sort-button" type="button" data-sort-key="pa">PA</button></th>
+                    <th><button class="sort-button" type="button" data-sort-key="msrp">MSRP</button></th>
+                    <th><button class="sort-button" type="button" data-sort-key="stock">Stock</button></th>
+                  </tr>
+                </thead>
+                <tbody id="productRows"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <aside class="side-panel">
+            <section class="panel">
+              <div class="panel-heading"><h2>Changes</h2><p>Compared with previous snapshot</p></div>
+              <div id="changes"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading"><h2>Data Quality</h2><p>EAN, image, and PA checks</p></div>
+              <div id="quality"></div>
+            </section>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js?v=20260628-compact-history"></script>
+  </body>
+</html>
