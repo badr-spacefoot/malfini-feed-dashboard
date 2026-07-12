@@ -93,8 +93,11 @@ function normalizeFeeds({ products, availabilities, prices, recommendedPrices, p
   const previousSizes = new Map((previous?.flatSizes || []).map((size) => [size.productSizeCode, size]));
 
   const flatSizes = [];
+  const productSummaries = [];
+  let variantCount = 0;
   const flatProducts = (products || []).map((product) => {
     const variants = (product.variants || []).map((variant) => {
+      variantCount += 1;
       const primaryImage = (variant.images || []).find((image) => image.viewCode === "c") || (variant.images || [])[0] || null;
       const attributes = Object.fromEntries((variant.attributes || []).map((item) => [item.code || item.title, item.text]));
       const sizes = (variant.nomenclatures || []).map((size) => {
@@ -141,19 +144,20 @@ function normalizeFeeds({ products, availabilities, prices, recommendedPrices, p
       };
     });
 
+    productSummaries.push({
+      code: product.code,
+      name: product.name,
+      categoryName: product.categoryName,
+      categoryCode: product.categoryCode,
+      trademark: product.trademark
+    });
+
     return {
       code: product.code,
       name: product.name,
       categoryName: product.categoryName,
       categoryCode: product.categoryCode,
-      gender: product.gender,
       trademark: product.trademark,
-      type: product.type,
-      subtitle: product.subtitle,
-      specification: product.specification,
-      description: product.description,
-      productCardPdf: product.productCardPdf,
-      sizeChartPdf: product.sizeChartPdf,
       variants
     };
   });
@@ -216,7 +220,7 @@ function normalizeFeeds({ products, availabilities, prices, recommendedPrices, p
   const historyEntry = {
     importedAt: new Date().toISOString(),
     products: flatProducts.length,
-    variants: flatProducts.reduce((sum, product) => sum + product.variants.length, 0),
+    variants: variantCount,
     sizes: flatSizes.length,
     totalStock,
     inStock,
@@ -240,7 +244,7 @@ function normalizeFeeds({ products, availabilities, prices, recommendedPrices, p
     source: CONFIG.baseUrl,
     counts: {
       products: flatProducts.length,
-      variants: flatProducts.reduce((sum, product) => sum + product.variants.length, 0),
+      variants: variantCount,
       sizes: flatSizes.length,
       availabilityRows: (availabilities || []).length,
       priceRows: (prices || []).length,
@@ -260,7 +264,7 @@ function normalizeFeeds({ products, availabilities, prices, recommendedPrices, p
     priceBuckets,
     importHistory,
     stockSnapshots,
-    products: flatProducts,
+    products: productSummaries,
     flatSizes,
     changes
   };
