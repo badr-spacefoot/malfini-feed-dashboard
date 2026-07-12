@@ -237,7 +237,7 @@ function normalizeFeeds({ products, availabilities, prices, recommendedPrices, p
       ? [buildStockSnapshot(previous.importedAt, previous.flatSizes)]
       : [];
   const stockSnapshot = buildStockSnapshot(historyEntry.importedAt, flatSizes);
-  const stockSnapshots = [...previousStockSnapshots, stockSnapshot].slice(-360);
+  const stockSnapshots = [...previousStockSnapshots, stockSnapshot].slice(-90);
 
   return {
     importedAt: historyEntry.importedAt,
