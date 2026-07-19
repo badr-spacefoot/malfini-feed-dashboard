@@ -29,9 +29,29 @@ jobs:
       - name: Restore previous import history
         run: |
           mkdir -p data
-          if [ -f previous-pages/data/feed-cache.json ]; then
-            cp previous-pages/data/feed-cache.json data/feed-cache.json
-          fi
+          node - <<'NODE'
+          const fs = require("fs");
+          const path = require("path");
+          const zlib = require("zlib");
+
+          const manifestPath = path.join("previous-pages", "feed-version.json");
+          let restored = false;
+          if (fs.existsSync(manifestPath)) {
+            const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+            const feedPath = path.join("previous-pages", manifest.feedPath || "");
+            if (feedPath.endsWith(".gz") && fs.existsSync(feedPath)) {
+              fs.writeFileSync("data/feed-cache.json", zlib.gunzipSync(fs.readFileSync(feedPath)));
+              restored = true;
+            } else if (fs.existsSync(feedPath)) {
+              fs.copyFileSync(feedPath, "data/feed-cache.json");
+              restored = true;
+            }
+          }
+          const legacyPath = path.join("previous-pages", "data", "feed-cache.json");
+          if (!restored && fs.existsSync(legacyPath)) {
+            fs.copyFileSync(legacyPath, "data/feed-cache.json");
+          }
+          NODE
 
       - name: Import latest Malfini feed
         env:
@@ -43,10 +63,9 @@ jobs:
       - name: Prepare static Pages snapshot
         run: |
           mkdir -p public/data
-          FEED_FILE="feed-cache-${GITHUB_RUN_ID}.json"
-          cp data/feed-cache.json "public/data/${FEED_FILE}"
-          cp data/feed-cache.json public/data/feed-cache.json
-          printf '{"feedPath":"data/%s","runId":"%s"}\n' "${FEED_FILE}" "${GITHUB_RUN_ID}" > public/feed-version.json
+          FEED_FILE="feed-cache-${GITHUB_RUN_ID}.json.gz"
+          gzip -9 -c data/feed-cache.json > "public/data/${FEED_FILE}"
+          printf '{"feedPath":"data/%s","runId":"%s","compressed":"gzip"}\n' "${FEED_FILE}" "${GITHUB_RUN_ID}" > public/feed-version.json
 
       - name: Publish GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

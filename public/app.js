@@ -110,10 +110,26 @@ async function fetchDashboardSnapshot(refresh = false) {
     return data;
   } catch (error) {
     const manifest = await fetchJson(`feed-version.json?v=${Date.now()}`).catch(() => ({ feedPath: "data/feed-cache.json" }));
-    const data = await fetchJson(`${manifest.feedPath || "data/feed-cache.json"}?v=${Date.now()}`);
+    const data = await fetchFeedSnapshot(manifest);
     state.staticMode = true;
     return data;
   }
+}
+
+async function fetchFeedSnapshot(manifest) {
+  const feedPath = manifest.feedPath || "data/feed-cache.json";
+  const url = `${feedPath}?v=${Date.now()}`;
+  if (!manifest.compressed && !feedPath.endsWith(".gz")) {
+    return fetchJson(url);
+  }
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Request failed: HTTP ${res.status}`);
+  if (!("DecompressionStream" in window)) {
+    throw new Error("This browser cannot decompress the published feed snapshot.");
+  }
+  const stream = res.body.pipeThrough(new DecompressionStream("gzip"));
+  const text = await new Response(stream).text();
+  return JSON.parse(text);
 }
 
 async function loadDashboard(refresh = false) {
